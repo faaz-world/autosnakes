@@ -30,9 +30,7 @@ def Your_score(score_p1, score_p2):
     value1 = score_font.render("Your Score: " + str(score_p1), True, yellow)
     value2 = score_font.render("Your Score: " + str(score_p2), True, yellow)
     dis.blit(value1, [0, 0])
-    print("Here is the score size")
     score_width , score_height = score_font.size("Your Score: " + str(score_p2))
-    print(score_width)
     dis.blit(value2, [(dis_width-score_width),0])
  
  
