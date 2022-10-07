@@ -1,8 +1,10 @@
 # autosnakes
+Welcome to Snake Game Competetion 
 
+# Outcomes of the Competition 
 
-- Scrum Team - Self Oragnizing Team 
-- Coding Best practices 
+- Self Oragnizing Teams 
+- Improve Coding Best practices 
 - Git Flow
 - Python 
 - Micro Services 
