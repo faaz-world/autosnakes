@@ -28,5 +28,10 @@ teams.py      : This file contains basic AI code for players
 The game will pass basic enviornment information to your function. 
 your function should return only one variable telling the game the direction your snake should move. 
 
-Updated Once
-
+## How to contribute
+1) Checkout the repo and create feature branch 
+2) Add your own team function in the teams.py - You can duplicate the sample alpha or beta functions 
+3) Work locally and commit the code to your branch end of day every day
+4) Share the out come in your team meetings with team members 
+5) When ready you can choose the name of team to play against in the snake_core.py code line 10 and 11 
+6) When ready to compete create a pull request for the moderators to pull in your code. 

@@ -2,8 +2,8 @@
 import pygame
 import time
 import random
-from teams import * 
 import teams 
+from teams import * 
 
 snake_speed = 15
 
@@ -239,7 +239,7 @@ while True:
 		game_over()
 
 
-	# Touching the own snake body
+	# Coliding with own snake body
 	for block in snake1_body[1:]:
 		if snake1_position[0] == block[0] and snake1_position[1] == block[1]:
 			game_over()
@@ -247,7 +247,7 @@ while True:
 		if snake2_position[0] == block[0] and snake2_position[1] == block[1]:
 			game_over()
 
-	# Touching the other snake body
+	# Coliding with other snake body
 	for block in snake1_body[1:]:
 		if snake2_position[0] == block[0] and snake2_position[1] == block[1]:
 			game_over()
