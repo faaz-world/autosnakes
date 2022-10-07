@@ -27,4 +27,6 @@ teams.py      : This file contains basic AI code for players
 
 The game will pass basic enviornment information to your function. 
 your function should return only one variable telling the game the direction your snake should move. 
- 
+
+Updated
+
