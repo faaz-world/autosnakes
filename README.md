@@ -1,4 +1,4 @@
-# Snake Competition
+# Snake Competition - Team: **Boa Hancock** 
 
 Welcome to Snake Game Competetion 
 
