@@ -1,12 +1,5 @@
-# Snake Competition - Team: **Anaconda**
+# Snake Competition
 
-#TEAM MEMBERS:
-
--Team Captain: Harkumar Baishya
--Dhiraj Bezbaruah
--Monisankar Baruah
--Jai Kumar Das
--Prerona Borkotoky
 
 Welcome to Snake Game Competetion 
 
@@ -45,3 +38,59 @@ your function should return only one variable telling the game the direction you
 4) Share the out come in your team meetings with team members 
 5) When ready you can choose the name of team to play against in the snake_core.py code line 10 and 11 
 6) When ready to compete create a pull request for the moderators to pull in your code. 
+
+# Teams
+
+
+## Team **Anaconda**
+
+- Team Captain: Harkumar Baishya
+- Dhiraj Bezbaruah
+- Monisankar Baruah
+- Jai Kumar Das
+- Prerona Borkotoky
+
+## Team **Copperhead**
+- Team Captain: Hrishikesh Baruah 
+- Rishav Talukdar 
+- Pallab Saikia
+- Diksha Chakravorty
+- R Mala
+
+## Team **CodeByte**
+- Team Captain: Palash Shome
+- Vamsi Naidu Dondeti
+- Amit Kumar
+- Chandan Bharali
+
+## Team **The Rattlesnakes**
+- Team Captain: Pranab
+- Manas
+- Nipu
+
+### Team **SideWinder**
+- Team Captain: Moloy
+- Partha
+- Mithulesh
+- Ramjan
+
+## Team **Pungi**
+- Team Captain: Jyotishman
+- Anupam
+- Steve 
+- Jordan
+
+## Team **Sokori Feti**
+- Team Captain: Ritom
+- Nabadeep Das 
+- Ankita
+- Devesh
+- Agrajit
+
+## Team **Boa Hancock**
+- Team Captain: Imani Sahil
+- Alahi Sahi
+- Jyotirmoi
+- Priya Sharma
+- Sumit Ghosh
+
