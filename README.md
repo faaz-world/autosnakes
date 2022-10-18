@@ -88,7 +88,7 @@ your function should return only one variable telling the game the direction you
 - Agrajit
 
 ## Team **Boa Hancock**
-- Imani Sahil
+- Team Captain: Imani Sahil
 - Alahi Sahi
 - Jyotirmoi
 - Priya Sharma
