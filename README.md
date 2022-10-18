@@ -1,4 +1,12 @@
-# Snake Competition - Team: **Boa Hancock** 
+# Snake Competition - Team: **Anaconda**
+
+#TEAM MEMBERS:
+
+-Team Captain: Harkumar Baishya
+-Dhiraj Bezbaruah
+-Monisankar Baruah
+-Jai Kumar Das
+-Prerona Borkotoky
 
 Welcome to Snake Game Competetion 
 
