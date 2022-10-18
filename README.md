@@ -2,11 +2,11 @@
 
 #TEAM MEMBERS:
 
-Team Captain: Harkumar Baishya
-Dhiraj Bezbaruah
-Monisankar Baruah
-Jai Kumar Das
-Prerona Borkotoky
+-Team Captain: Harkumar Baishya
+-Dhiraj Bezbaruah
+-Monisankar Baruah
+-Jai Kumar Das
+-Prerona Borkotoky
 
 Welcome to Snake Game Competetion 
 
