@@ -208,7 +208,7 @@ while True:
         snake2_position[1] += 10
     if snake2_direction == "LEFT":
         snake2_position[0] -= 10
-    if snake2_direction == "RIGHT":
+    if snake2_direction == "RIGHT":  # steve test
         snake2_position[0] += 10
 
     # Snake body growing mechanism
