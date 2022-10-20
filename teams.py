@@ -75,7 +75,7 @@ def beta(
     # avoid left right
     if mysnake_new_position_x > dis_width - 10:  # hitting left wall
         new_direction = "UP"
-    # avoid left wall
+    # avoid left wall test
     if mysnake_new_position_y < 0:  # hitting left wall
         new_direction = "LEFT"
     # avoid left wall
