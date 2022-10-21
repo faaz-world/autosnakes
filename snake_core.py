@@ -36,22 +36,26 @@ game_window = pygame.display.set_mode((window_x, window_y))
 fps = pygame.time.Clock()
 
 # defining snake default position
-snake1_position = [100, 50]
-snake2_position = [1200, 150]
+snake1_init_position = [800, 380]
+snake2_init_position = [800, 420]
 
+snake1_position = snake1_init_position.copy()
+snake2_position = snake2_init_position.copy()
 
-# defining first 4 blocks of snake body
-snake1_body = [[100, 50],
-			[90, 50],
-			[80, 50],
-			[70, 50]
+# defining first 4 blocks of snake body. Snakes start in the center of the screen
+snake1_init_body = [[800, 380],
+			[790, 380],
+			[780, 380],
+			[770, 380]
 			]
-snake2_body = [[1200, 150],
-			[1210, 150],
-			[1220, 150],
-			[1230, 150]
+snake2_init_body = [[800, 420],
+			[810, 420],
+			[820, 420],
+			[830, 420]
 			]
 
+snake1_body = snake1_init_body.copy()
+snake2_body = snake2_init_body.copy()
 
 # fruit position
 fruit_position = [random.randrange(1, (window_x//10)) * 10,
@@ -59,8 +63,8 @@ fruit_position = [random.randrange(1, (window_x//10)) * 10,
 
 fruit_spawn = True
 
-# setting default snake direction towards
-# right
+# setting default snake direction away from each other
+
 snake1_direction = 'RIGHT'
 snake1_change_to = snake1_direction
 
@@ -71,6 +75,9 @@ snake2_change_to = snake2_direction
 # initial score
 snake1_score = 0
 snake2_score = 0
+snake1_totscore = 0
+snake2_totscore = 0
+
 
 # displaying Score function
 def show_score(choice, color, font, size):
@@ -80,7 +87,7 @@ def show_score(choice, color, font, size):
 	
 	# create the display surface object
 	# score_surface
-	score_surface = score_font.render('Snake 1 Score : ' + str(snake1_score)+ ' Snake 2 Score : ' + str(snake2_score), True, color)
+	score_surface = score_font.render('Snake 1 Round : ' + str(snake1_score)+ ' Snake 1 Total : ' + str(snake1_totscore)+ '    Snake 2 Round : ' + str(snake2_score) + ' Snake 2 Total : ' + str(snake2_totscore)+ '    Remaining Time : ' + str(int(600-(pygame.time.get_ticks()/1000))), True, color)
 	
 	# create a rectangular object for the text
 	# surface object
@@ -89,16 +96,61 @@ def show_score(choice, color, font, size):
 	# displaying text
 	game_window.blit(score_surface, score_rect)
 
+# Reset after a crash
+def next_round():
+	
+	game_window.fill(red)
+	
+	#add up total points
+	global snake1_totscore 
+	global snake2_totscore 
+	global snake1_score
+	global snake2_score
+	
+	snake1_totscore += snake1_score
+	snake2_totscore += snake2_score
+	snake1_score = 0
+	snake2_score = 0
+
+	# reset snake default position
+	global snake1_position
+	global snake2_position
+	snake1_position = snake1_init_position.copy()
+	snake2_position = snake2_init_position.copy()
+
+	# reset first 4 blocks of snake body
+	global snake1_body
+	global snake2_body
+	snake1_body = snake1_init_body.copy()
+	snake2_body = snake2_init_body.copy()
+
+	# setting default snake direction towards
+	# right
+	global snake1_direction
+	snake1_direction = 'RIGHT'
+
+
+	global snake2_direction
+	snake2_direction = 'LEFT'
+	
+	return
+
 # game over function
 def game_over():
-
+	
+	#assign final points
+	global snake1_totscore 
+	global snake2_totscore 
+	snake1_totscore += snake1_score
+	snake2_totscore += snake2_score
+	
 	# creating font object my_font
 	my_font = pygame.font.SysFont('times new roman', 50)
 	
 	# creating a text surface on which text
 	# will be drawn
 	game_over_surface = my_font.render(
-		'Scores are Snake 1 : ' + str(snake1_score)+' Snake 2 : ' + str(snake2_score), True, red)
+		'Final Score! Snake 1 : ' + str(snake1_totscore)+' Snake 2 : ' + str(snake2_totscore), True, red)
 	
 	# create a rectangular object for the text
 	# surface object
@@ -122,7 +174,10 @@ def game_over():
 
 
 # Main Function
-while True:
+while pygame.time.get_ticks() < 600000:
+	
+
+
 	# handling key events manual override 
 	snake1_change_to = player1(snake1_body, snake2_body, fruit_position, snake1_direction, snake2_direction,snake1_position,snake2_position, window_x, window_y)
 	snake2_change_to = player2(snake2_body, snake1_body, fruit_position, snake2_direction, snake1_direction,snake2_position,snake1_position, window_x, window_y)
@@ -228,33 +283,34 @@ while True:
 
 	# Game Over conditions
 	if snake1_position[0] < 0 or snake1_position[0] > window_x-10:
-		game_over()
+		next_round()
 	if snake1_position[1] < 0 or snake1_position[1] > window_y-10:
-		game_over()
+		next_round()
 
 	# Game Over conditions
 	if snake2_position[0] < 0 or snake2_position[0] > window_x-10:
-		game_over()
+		next_round()
 	if snake2_position[1] < 0 or snake2_position[1] > window_y-10:
-		game_over()
+		next_round()
 
 
 	# Coliding with own snake body
 	for block in snake1_body[1:]:
 		if snake1_position[0] == block[0] and snake1_position[1] == block[1]:
-			game_over()
+			next_round()
 	for block in snake2_body[1:]:
 		if snake2_position[0] == block[0] and snake2_position[1] == block[1]:
-			game_over()
+			next_round()
 
 	# Coliding with other snake body
 	for block in snake1_body[1:]:
 		if snake2_position[0] == block[0] and snake2_position[1] == block[1]:
-			game_over()
+			snake2_score /= 2
+			next_round()
 	for block in snake2_body[1:]:
 		if snake1_position[0] == block[0] and snake1_position[1] == block[1]:
-			game_over()
-
+			snake1_score /= 2
+			next_round()
 
 	# displaying score countinuously
 	show_score(1, white, 'times new roman', 20)
@@ -264,3 +320,5 @@ while True:
 
 	# Frame Per Second /Refresh Rate
 	fps.tick(snake_speed)
+
+game_over()
