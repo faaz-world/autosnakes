@@ -14,8 +14,8 @@ player1 = getattr(teams, team1_name)
 player2 = getattr(teams, team2_name)
 
 # Window size
-window_x = 1600
-window_y = 800
+window_x = 600
+window_y = 600
 
 # defining colors
 black = pygame.Color(0, 0, 0)
@@ -36,22 +36,20 @@ game_window = pygame.display.set_mode((window_x, window_y))
 fps = pygame.time.Clock()
 
 # defining snake default position
-snake1_init_position = [800, 380]
-snake2_init_position = [800, 420]
+snake1_init_position = [300, 270]
+snake2_init_position = [300, 330]
 
 snake1_position = snake1_init_position.copy()
 snake2_position = snake2_init_position.copy()
 
-# defining first 4 blocks of snake body. Snakes start in the center of the screen
-snake1_init_body = [[800, 380],
-			[790, 380],
-			[780, 380],
-			[770, 380]
+# defining first 3 blocks of snake body. Snakes start in the center of the screen
+snake1_init_body = [[300, 270],
+			[290, 270],
+			[280, 270]
 			]
-snake2_init_body = [[800, 420],
-			[810, 420],
-			[820, 420],
-			[830, 420]
+snake2_init_body = [[300, 330],
+			[310, 330],
+			[320, 330]
 			]
 
 snake1_body = snake1_init_body.copy()
@@ -133,6 +131,9 @@ def next_round():
 	global snake2_direction
 	snake2_direction = 'LEFT'
 	
+	# randomize fruit position
+	global fruit_spawn
+	fruit_spawn = False
 	return
 
 # game over function
@@ -283,8 +284,10 @@ while pygame.time.get_ticks() < 600000:
 
 	# Game Over conditions
 	if snake1_position[0] < 0 or snake1_position[0] > window_x-10:
+		snake1_score /= 2
 		next_round()
 	if snake1_position[1] < 0 or snake1_position[1] > window_y-10:
+		snake1_score /= 2
 		next_round()
 
 	# Game Over conditions
@@ -297,9 +300,11 @@ while pygame.time.get_ticks() < 600000:
 	# Coliding with own snake body
 	for block in snake1_body[1:]:
 		if snake1_position[0] == block[0] and snake1_position[1] == block[1]:
+			snake1_score /= 2
 			next_round()
 	for block in snake2_body[1:]:
 		if snake2_position[0] == block[0] and snake2_position[1] == block[1]:
+			snake2_score /= 2
 			next_round()
 
 	# Coliding with other snake body
