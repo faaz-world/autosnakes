@@ -5,6 +5,7 @@ import random
 import teams 
 from teams import * 
 
+
 snake_speed = 15
 
 team1_name = "alpha"
@@ -168,10 +169,10 @@ def game_over():
 	time.sleep(5)
 	
 	# deactivating pygame library
-	pygame.quit()
+	#pygame.quit()
 	
 	# quit the program
-	quit()
+	#quit()
 
 
 # Main Function
@@ -285,16 +286,18 @@ while pygame.time.get_ticks() < 600000:
 	# Game Over conditions
 	if snake1_position[0] < 0 or snake1_position[0] > window_x-10:
 		snake1_score /= 2
-		next_round()
+		#next_round()
 	if snake1_position[1] < 0 or snake1_position[1] > window_y-10:
 		snake1_score /= 2
-		next_round()
+		#next_round()
 
 	# Game Over conditions
 	if snake2_position[0] < 0 or snake2_position[0] > window_x-10:
-		next_round()
+		#next_round()
+		pass
 	if snake2_position[1] < 0 or snake2_position[1] > window_y-10:
-		next_round()
+		#next_round()
+		pass
 
 
 	# Coliding with own snake body
@@ -326,4 +329,4 @@ while pygame.time.get_ticks() < 600000:
 	# Frame Per Second /Refresh Rate
 	fps.tick(snake_speed)
 
-game_over()
+#game_over()
