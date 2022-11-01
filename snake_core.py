@@ -46,7 +46,24 @@ snake2_position = snake2_init_position.copy()
 # defining first 3 blocks of snake body. Snakes start in the center of the screen
 snake1_init_body = [[300, 270],
 			[290, 270],
-			[280, 270]
+			[280, 270],
+			[270, 270],
+			[260, 270],
+			[250, 270],
+			[240, 270],
+			[230, 270],
+			[220, 270],
+			[210, 270],
+			[200, 270],
+			[190, 270],
+			[180, 270],
+			[170, 270],
+			[160, 270],
+			[150, 270],
+			[140, 270],
+			[130, 270],
+			[120, 270],
+			[110, 270]
 			]
 snake2_init_body = [[300, 330],
 			[310, 330],

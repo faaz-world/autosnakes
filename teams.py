@@ -9,11 +9,10 @@ def alpha( mysnake, othersnake, fruit, mysnake_dir, othersnake_dir, mysnake_pos,
     mysnake_new_position_y = mysnake_pos[1]
     
     #print(fruit)
-
-    print(mysnake[0][0])
     
-    new_direction = change_auto_direction(mysnake,fruit,mysnake_dir)
+    #new_direction = change_auto_direction(mysnake,fruit,mysnake_dir)
 
+    new_direction = check_before_self_collision(mysnake,dis_width,fruit,mysnake_dir)
 	# Moving the snakes
     if new_direction == 'UP':
         mysnake_new_position_y -= 10
