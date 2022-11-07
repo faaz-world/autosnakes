@@ -194,8 +194,6 @@ def game_over():
 
 # Main Function
 while pygame.time.get_ticks() < 600000:
-	
-
 
 	# handling key events manual override 
 	snake1_change_to = player1(snake1_body, snake2_body, fruit_position, snake1_direction, snake2_direction,snake1_position,snake2_position, window_x, window_y)

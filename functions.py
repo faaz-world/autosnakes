@@ -1,4 +1,4 @@
-def change_auto_direction(mysnake, fruit, mysnake_dir, dis_width):
+def change_auto_direction(mysnake, fruit, mysnake_dir):
     if mysnake[0][0] == fruit[0]:
         if mysnake[0][1] < fruit[1]:
             if mysnake_dir != 'UP':
@@ -33,22 +33,22 @@ def change_auto_direction(mysnake, fruit, mysnake_dir, dis_width):
                     return 'UP'
                 else:
                     return 'DOWN'
-    elif mysnake[0][1] < fruit[1] and mysnake[0][1] < fruit[1]:
+    elif mysnake[0][0] < fruit[0] and mysnake[0][1] < fruit[1]:
         if mysnake_dir != 'LEFT':
             return 'RIGHT'
         else:
             return 'DOWN'
-    elif mysnake[0][1] < fruit[1] < mysnake[0][1]:
+    elif mysnake[0][0] < fruit[0] and mysnake[0][1] > fruit[1]:
         if mysnake_dir != 'LEFT':
             return 'RIGHT'
         else:
             return 'UP'
-    elif mysnake[0][1] > fruit[1] > mysnake[0][1]:
+    elif mysnake[0][0] > fruit[0] and mysnake[0][1] < fruit[1]:
         if mysnake_dir != 'RIGHT':
             return 'LEFT'
         else:
             return 'DOWN'
-    elif mysnake[0][1] > fruit[1] and mysnake[0][1] > fruit[1]:
+    elif mysnake[0][0] > fruit[0] and mysnake[0][1] > fruit[1]:
         if mysnake_dir != 'RIGHT':
             return 'LEFT'
         else:
@@ -73,6 +73,8 @@ def check_before_self_collision(mysnake, dis_width, fruit, mysnake_dir):
                         return 'LEFT'
                     else:
                         return 'RIGHT'
+            else:
+                return False
         elif mysnake_dir == "DOWN":
             diff = block[1] - mysnake[0][1]
             if 0 < diff <= 20 and mysnake[0][0] == block[0]:
@@ -86,6 +88,8 @@ def check_before_self_collision(mysnake, dis_width, fruit, mysnake_dir):
                         return 'LEFT'
                     else:
                         return 'RIGHT'
+            else:
+                return False
         elif mysnake_dir == "LEFT":
             diff = mysnake[0][0] - block[0]
             if 0 < diff <= 20 and mysnake[0][1] == block[1]:
@@ -99,6 +103,8 @@ def check_before_self_collision(mysnake, dis_width, fruit, mysnake_dir):
                         return 'UP'
                     else:
                         return 'DOWN'
+            else:
+                return False
         elif mysnake_dir == "RIGHT":
             diff = block[0] - mysnake[0][0]
             if 0 < diff <= 20 and mysnake[0][1] == block[1]:
@@ -112,6 +118,8 @@ def check_before_self_collision(mysnake, dis_width, fruit, mysnake_dir):
                         return 'UP'
                     else:
                         return 'DOWN'
+            else:
+                return False
 
 
 def is_snake_collision_right(mysnake, dis_width):
