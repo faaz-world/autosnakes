@@ -41,7 +41,7 @@ def alpha(mysnake, othersnake, fruit, mysnake_dir, othersnake_dir, mysnake_pos, 
     # avoid up wall
     if mysnake_new_position_y < 0:  # hitting left wall
         new_direction = 'LEFT'
-    print(new_direction)
+
     return new_direction
 
 
