@@ -13,7 +13,9 @@ def alpha(mysnake, othersnake, fruit, mysnake_dir, othersnake_dir, mysnake_pos, 
     # else:
     #     print("Collide")
 
-    new_direction = check_other_snake_collision(mysnake,othersnake,dis_width,fruit,mysnake_dir)    
+    # new_direction = check_other_snake_collision(mysnake,othersnake,dis_width,fruit,mysnake_dir)
+
+    new_direction = get_direction(mysnake, othersnake, dis_width, fruit, mysnake_dir)
 
     # Moving the snakes
     if new_direction == 'UP':

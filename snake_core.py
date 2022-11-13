@@ -329,7 +329,8 @@ while pygame.time.get_ticks() < 600000:
 	for block in snake1_body[1:]:
 		if snake1_position[0] == block[0] and snake1_position[1] == block[1]:
 			snake1_score /= 2
-			next_round()
+			# next_round()
+			quit()
 	for block in snake2_body[1:]:
 		if snake2_position[0] == block[0] and snake2_position[1] == block[1]:
 			snake2_score /= 2
