@@ -51,8 +51,10 @@ snake2_body = snake2_init_body.copy()
 
 # fruit position
 fruit_position = [
+
  random.randrange(1, (window_x // 10)) * 10,
  random.randrange(1, (window_y // 10)) * 10,
+
 ]
 
 fruit_spawn = True
@@ -75,6 +77,7 @@ snake2_totscore = 0
 
 # displaying Score function
 def show_score(choice, color, font, size):
+
 
  # creating font object score_font
  score_font = pygame.font.SysFont(font, size)
@@ -104,8 +107,10 @@ def show_score(choice, color, font, size):
  game_window.blit(score_surface, score_rect)
 
 
+
 # Reset after a crash
 def next_round():
+
 
  game_window.fill(red)
 
@@ -146,8 +151,10 @@ def next_round():
  return
 
 
+
 # game over function
 def game_over():
+
 
  # assign final points
  global snake1_totscore
@@ -369,5 +376,6 @@ while running:
 
  # Frame Per Second /Refresh Rate
  fps.tick(snake_speed)
+
 
 game_over()
