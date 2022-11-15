@@ -5,6 +5,9 @@ import random
 import teams
 from teams import *
 
+# Custom Imports from Pungi
+import math
+
 snake_speed = 15
 
 team1_name = "alpha"
@@ -190,6 +193,42 @@ def game_over():
     quit()
 
 
+# Custom utility for Pungi:
+##direction algorithm here ##
+# conpute decision scores for each direction
+#  if we have won points this round:
+#  Score =
+#   Distance to apple*2 (- distance to original point )
+#   (- (Distance to all self body points / number of body_points) * 0.5)
+#   (- (Distance to all other snakes' body points / number of other snakes' body_points) * 0.5)
+#  if we havn't won points this round:
+#  Score =
+#   Distance to apple*2 (- distance to original point )
+def compute_Decison_score(Predicted_location):
+    location_next = Predicted_location
+    die_point = [0, 0]
+    if snake2_score == 0:
+        Decision_Score = 2 * math.dist(location_next, fruit_position) - math.dist(
+            location_next, die_point
+        )
+
+    else:
+        Self_body_Penalty = 0
+        Other_body_Penalty = 0
+        for pos in snake2_body:
+            Self_body_Penalty = Self_body_Penalty + math.dist(location_next, pos)
+        for pos2 in snake1_body:
+            Other_body_Penalty = Other_body_Penalty + math.dist(location_next, pos2)
+        Decision_Score = (
+            2 * math.dist(location_next, fruit_position)
+            - math.dist(location_next, die_point)
+            - 0.5 * (Self_body_Penalty / len(snake2_body))
+            - 0.5 * (Other_body_Penalty / len(snake1_body))
+        )
+
+    return Decision_Score
+
+
 # Main Function
 while pygame.time.get_ticks() < 600000:
 
@@ -257,6 +296,39 @@ while pygame.time.get_ticks() < 600000:
         snake2_direction = "LEFT"
     if snake2_change_to == "RIGHT" and snake2_direction != "LEFT":
         snake2_direction = "RIGHT"
+
+    # Pungi: Team Pungi is using snake 2
+    # assuming the location for differnt directions for score computation
+    move_left_position = [snake2_position[0] - 10, snake2_position[1]]
+    move_right_position = [snake2_position[0] + 10, snake2_position[1]]
+    move_down_position = [snake2_position[0], snake2_position[1] + 10]
+    move_up_position = [snake2_position[0], snake2_position[1] - 10]
+
+    # Compare decision scores for 3 directions, select the smallet one
+    Decision_score_up = compute_Decison_score(move_up_position)
+    Decision_score_down = compute_Decison_score(move_down_position)
+    Decision_score_left = compute_Decison_score(move_left_position)
+    Decision_score_right = compute_Decison_score(move_right_position)
+
+    Decision = min(
+        Decision_score_up,
+        Decision_score_down,
+        Decision_score_left,
+        Decision_score_right,
+    )
+    if Decision == Decision_score_up and snake2_direction != "DOWN":
+        snake2_direction = "UP"
+
+    elif Decision == Decision_score_down and snake2_direction != "UP":
+        snake2_direction = "DOWN"
+
+    elif Decision == Decision_score_left and snake2_direction != "RIGHT":
+        snake2_direction = "LEFT"
+
+    elif Decision == Decision_score_right and snake2_direction != "LEFT":
+        snake2_direction = "RIGHT"
+
+    # print(snake2_direction)
 
     # Moving the snakes
     if snake1_direction == "UP":
