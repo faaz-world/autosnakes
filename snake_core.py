@@ -316,19 +316,41 @@ while pygame.time.get_ticks() < 600000:
         Decision_score_left,
         Decision_score_right,
     )
-    if Decision == Decision_score_up and snake2_direction != "DOWN":
-        snake2_direction = "UP"
 
-    elif Decision == Decision_score_down and snake2_direction != "UP":
-        snake2_direction = "DOWN"
+    ##Decision and coner case handling algorithm algorithm##
+    if Decision == Decision_score_up:
+        if snake2_direction != "DOWN":
+            snake2_direction = "UP"
+        elif snake2_direction == "DOWN":
+            snake2_direction = "RIGHT"
+        if move_up_position[1] < 0 or move_up_position[1] > window_y - 10:
+            snake2_direction = "RIGHT"
 
-    elif Decision == Decision_score_left and snake2_direction != "RIGHT":
-        snake2_direction = "LEFT"
+    elif Decision == Decision_score_down:
+        if snake2_direction != "UP":
+            snake2_direction = "DOWN"
+        elif snake2_direction == "UP":
+            snake2_direction = "LEFT"
+        if move_down_position[1] < 0 or move_down_position[1] > window_y - 10:
+            snake2_direction = "LEFT"
 
-    elif Decision == Decision_score_right and snake2_direction != "LEFT":
-        snake2_direction = "RIGHT"
+    elif Decision == Decision_score_left:
+        if snake2_direction != "RIGHT":
+            snake2_direction = "LEFT"
+        elif snake2_direction == "RIGHT":
+            snake2_direction = "UP"
+        if move_left_position[0] < 0 or move_left_position[0] > window_x - 10:
+            snake2_direction = "UP"
 
-    # print(snake2_direction)
+    elif Decision == Decision_score_right:
+        if snake2_direction != "LEFT":
+            snake2_direction = "RIGHT"
+        elif snake2_direction == "LEFT":
+            snake2_direction = "DOWN"
+        if move_right_position[0] < 0 or move_right_position[0] > window_x - 10:
+            snake2_direction = "DOWN"
+
+    # to do: detect if the one step on route has body of self or opponet, if there is, change direction
 
     # Moving the snakes
     if snake1_direction == "UP":
