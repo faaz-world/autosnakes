@@ -1,7 +1,7 @@
-# Snake Competition
+# Snake Competition 
 
 
-Welcome to Snake Game Competetion 
+Welcome to Snake Game Competetion 2023
 
 ## Outcomes of the Competition 
 
