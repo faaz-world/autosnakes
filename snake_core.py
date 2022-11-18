@@ -7,7 +7,7 @@ from teams import *
 
 snake_speed = 15
 
-team1_name = "alpha"
+team1_name = "copperhead"
 # team2_name = "beta"
 team2_name = "side_winder"
 
@@ -85,28 +85,39 @@ def show_score(choice, color, font, size):
 
  # create the display surface object
  # score_surface
- score_surface = score_font.render(
-  "Snake 1: "
+ score_surface1 = score_font.render(
+  "Snake 1: "+ team1_name +" "
   + str(snake1_score)
   + " Total:"
-  + str(snake1_totscore)
-  + "--Snake 2:"
+  + str(snake1_totscore),
+  True,
+  green,
+ )
+
+ score_surface2 = score_font.render(
+  "Snake 2: "+ team2_name +" "
   + str(snake2_score)
   + " Total:"
-  + str(snake2_totscore)
-  + " Time: "
+  + str(snake2_totscore),
+  True,
+  yellow,
+ )
+
+ time_surface = score_font.render(
+  " Time: "
   + str(int(600 - (pygame.time.get_ticks() / 1000))),
   True,
   color,
  )
-
  # create a rectangular object for the text
  # surface object
- score_rect = score_surface.get_rect()
-
+ score_rect1 = score_surface1.get_rect()
+ score_rect2 = score_surface2.get_rect()
+ time_rect = time_surface.get_rect()
  # displaying text
- game_window.blit(score_surface, score_rect)
-
+ game_window.blit(score_surface1, (0,0))
+ game_window.blit(score_surface2, (0,20))
+ game_window.blit(time_surface, (0,window_y-20))
 
 
 # Reset after a crash
@@ -336,17 +347,21 @@ while running:
  # Game Over conditions
  if snake1_position[0] < 0 or snake1_position[0] > window_x - 10:
   snake1_score /= 2
+  snake1_totscore /= 2
   next_round()
  if snake1_position[1] < 0 or snake1_position[1] > window_y - 10:
   snake1_score /= 2
+  snake1_totscore /= 2
   next_round()
 
  # Game Over conditions
  if snake2_position[0] < 0 or snake2_position[0] > window_x - 10:
   snake2_score /= 2
+  snake2_totscore /= 2
   next_round()
  if snake2_position[1] < 0 or snake2_position[1] > window_y - 10:
   snake2_score /= 2
+  snake2_totscore /= 2
   next_round()
 
  # Coliding with own snake body
