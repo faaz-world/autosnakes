@@ -8,7 +8,8 @@ from teams import *
 snake_speed = 15
 
 team1_name = "alpha"
-team2_name = "beta"
+# team2_name = "beta"
+team2_name = "side_winder"
 
 player1 = getattr(teams, team1_name)
 player2 = getattr(teams, team2_name)
