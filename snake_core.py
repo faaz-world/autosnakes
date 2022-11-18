@@ -323,15 +323,11 @@ while pygame.time.get_ticks() < 600000:
             snake2_direction = "UP"
         elif snake2_direction == "DOWN":
             snake2_direction = "RIGHT"
-        if move_up_position[1] < 0 or move_up_position[1] > window_y - 10:
-            snake2_direction = "RIGHT"
 
     elif Decision == Decision_score_down:
         if snake2_direction != "UP":
             snake2_direction = "DOWN"
         elif snake2_direction == "UP":
-            snake2_direction = "LEFT"
-        if move_down_position[1] < 0 or move_down_position[1] > window_y - 10:
             snake2_direction = "LEFT"
 
     elif Decision == Decision_score_left:
@@ -339,16 +335,22 @@ while pygame.time.get_ticks() < 600000:
             snake2_direction = "LEFT"
         elif snake2_direction == "RIGHT":
             snake2_direction = "UP"
-        if move_left_position[0] < 0 or move_left_position[0] > window_x - 10:
-            snake2_direction = "UP"
 
     elif Decision == Decision_score_right:
         if snake2_direction != "LEFT":
             snake2_direction = "RIGHT"
         elif snake2_direction == "LEFT":
             snake2_direction = "DOWN"
-        if move_right_position[0] < 0 or move_right_position[0] > window_x - 10:
-            snake2_direction = "DOWN"
+    ##Check for boundaries
+    if snake2_direction == "LEFT" or snake2_direction == "RIGHT":
+        mysnake_new_position_x = move_left_position[0]
+        if mysnake_new_position_x < 0 or mysnake_new_position_x > window_x - 10:
+            snake2_direction = "UP"
+
+    elif snake2_direction == "UP" or snake2_direction == "DOWN":
+        mysnake_new_position_y = move_up_position[1]
+        if mysnake_new_position_y < 0 or mysnake_new_position_y > window_y - 10:
+            snake2_direction = "LEFT"
 
     # to do: detect if the one step on route has body of self or opponet, if there is, change direction
 
