@@ -54,6 +54,8 @@ def beta(mysnake, othersnake, fruit, mysnake_dir, othersnake_dir, mysnake_pos, o
     mysnake_new_position_x = mysnake_pos[0]
     mysnake_new_position_y = mysnake_pos[1]
 
+    new_direction = get_direction2(mysnake, othersnake, dis_width, fruit, mysnake_dir)
+
     # Moving the snakes
     if mysnake_dir == 'UP':
         mysnake_new_position_y -= 10
