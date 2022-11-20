@@ -1,7 +1,7 @@
 from functions import *
 
 
-def alpha(mysnake, othersnake, fruit, mysnake_dir, othersnake_dir, mysnake_pos, othersnake_pos, dis_width, dis_height):
+def copperhead(mysnake, othersnake, fruit, mysnake_dir, othersnake_dir, mysnake_pos, othersnake_pos, dis_width, dis_height):
     new_direction = mysnake_dir
     mysnake_new_position_x = mysnake_pos[0]
     mysnake_new_position_y = mysnake_pos[1]
