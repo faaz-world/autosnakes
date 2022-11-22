@@ -1,4 +1,5 @@
 import math
+from pungi import snake_pungi
 
 
 def alpha(
@@ -83,3 +84,27 @@ def beta(
         new_direction = "LEFT"
 
     return new_direction
+
+
+def pungi(
+    mysnake,
+    othersnake,
+    fruit,
+    mysnake_dir,
+    othersnake_dir,
+    mysnake_pos,
+    othersnake_pos,
+    dis_width,
+    dis_height,
+):
+    snake_pungi(
+        mysnake,
+        othersnake,
+        fruit,
+        mysnake_dir,
+        othersnake_dir,
+        mysnake_pos,
+        othersnake_pos,
+        dis_width,
+        dis_height,
+    )
