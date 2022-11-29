@@ -24,9 +24,9 @@ def compute_Decison_score(
         Other_body_Penalty = Other_body_Penalty + math.dist(location_next, pos2)
     Decision_Score = (
         2 * math.dist(location_next, fruit_position)
-        - math.dist(location_next, die_point)
-        - 0.5 * (Self_body_Penalty / len(snake2_body))
-        - 0.5 * (Other_body_Penalty / len(snake1_body))
+        + math.dist(location_next, die_point)
+        + 0.5 * (Self_body_Penalty / len(snake2_body))
+        + 0.5 * (Other_body_Penalty / len(snake1_body))
     )
 
     return Decision_Score
@@ -53,7 +53,7 @@ def pungi(
 
     # Compare decision scores for 3 directions, select the smallet one
     Decision_score_up = compute_Decison_score(
-        move_left_position, fruit, mysnake, othersnake
+        move_up_position, fruit, mysnake, othersnake
     )
     Decision_score_down = compute_Decison_score(
         move_down_position, fruit, mysnake, othersnake
@@ -71,6 +71,15 @@ def pungi(
         Decision_score_left,
         Decision_score_right,
     )
+    # temp replacement algorithm **testing only**
+    # if Decision == Decision_score_up:
+    #     snake2_direction = "UP"
+    # elif Decision == Decision_score_down:
+    #     snake2_direction = "DOWN"
+    # elif Decision == Decision_score_left:
+    #     snake2_direction = "LEFT"
+    # elif Decision == Decision_score_right:
+    #     snake2_direction = "RIGHT"
 
     ##Decision and coner case handling algorithm ##
     if Decision == Decision_score_up:
@@ -106,6 +115,8 @@ def pungi(
         mysnake_new_position_y = move_up_position[1]
         if mysnake_new_position_y < 0 or mysnake_new_position_y > dis_height - 10:
             snake2_direction = "LEFT"
+
+    print(snake2_direction)
 
     return snake2_direction
 
