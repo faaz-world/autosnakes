@@ -10,8 +10,9 @@ import math
 
 snake_speed = 15
 
-team1_name = "alpha"
-team2_name = "beta"
+team1_name = "copperhead"
+# team2_name = "beta"
+team2_name = "side_winder"
 
 player1 = getattr(teams, team1_name)
 player2 = getattr(teams, team2_name)
@@ -59,7 +60,7 @@ fruit_position = [
 ]
 
 fruit_spawn = True
-
+running = True
 # setting default snake direction away from each other
 
 snake1_direction = "RIGHT"
@@ -84,27 +85,42 @@ def show_score(choice, color, font, size):
 
     # create the display surface object
     # score_surface
-    score_surface = score_font.render(
-        "Snake 1 Round : "
+    score_surface1 = score_font.render(
+        "Snake 1: "
+        + team1_name
+        + " "
         + str(snake1_score)
-        + " Snake 1 Total : "
-        + str(snake1_totscore)
-        + "    Snake 2 Round : "
+        + " Total:"
+        + str(snake1_totscore),
+        True,
+        green,
+    )
+
+    score_surface2 = score_font.render(
+        "Snake 2: "
+        + team2_name
+        + " "
         + str(snake2_score)
-        + " Snake 2 Total : "
-        + str(snake2_totscore)
-        + "    Remaining Time : "
-        + str(int(600 - (pygame.time.get_ticks() / 1000))),
+        + " Total:"
+        + str(snake2_totscore),
+        True,
+        yellow,
+    )
+
+    time_surface = score_font.render(
+        " Time: " + str(int(600 - (pygame.time.get_ticks() / 1000))),
         True,
         color,
     )
-
     # create a rectangular object for the text
     # surface object
-    score_rect = score_surface.get_rect()
-
+    score_rect1 = score_surface1.get_rect()
+    score_rect2 = score_surface2.get_rect()
+    time_rect = time_surface.get_rect()
     # displaying text
-    game_window.blit(score_surface, score_rect)
+    game_window.blit(score_surface1, (0, 0))
+    game_window.blit(score_surface2, (0, 20))
+    game_window.blit(time_surface, (0, window_y - 20))
 
 
 # Reset after a crash
@@ -159,14 +175,14 @@ def game_over():
     snake2_totscore += snake2_score
 
     # creating font object my_font
-    my_font = pygame.font.SysFont("times new roman", 50)
+    my_font = pygame.font.SysFont("times new roman", 20)
 
     # creating a text surface on which text
     # will be drawn
     game_over_surface = my_font.render(
         "Final Score! Snake 1 : "
         + str(snake1_totscore)
-        + " Snake 2 : "
+        + " -- Snake 2 : "
         + str(snake2_totscore),
         True,
         red,
@@ -184,7 +200,7 @@ def game_over():
     pygame.display.flip()
 
     # after 2 seconds we will quit the program
-    time.sleep(5)
+    time.sleep(20)
 
     # deactivating pygame library
     pygame.quit()
@@ -194,8 +210,10 @@ def game_over():
 
 
 # Main Function
-while pygame.time.get_ticks() < 600000:
+while running:
 
+    if pygame.time.get_ticks() > 600000:
+        running = False
     # handling key events manual override
     snake1_change_to = player1(
         snake1_body,
@@ -240,6 +258,8 @@ while pygame.time.get_ticks() < 600000:
                 snake2_change_to = "LEFT"
             if event.key == pygame.K_d:
                 snake2_change_to = "RIGHT"
+        if event.type == pygame.QUIT:
+            running = False
 
     # If two keys pressed simultaneously
     # we don't want snake to move into two
@@ -328,15 +348,21 @@ while pygame.time.get_ticks() < 600000:
     # Game Over conditions
     if snake1_position[0] < 0 or snake1_position[0] > window_x - 10:
         snake1_score /= 2
+        snake1_totscore /= 2
         next_round()
     if snake1_position[1] < 0 or snake1_position[1] > window_y - 10:
         snake1_score /= 2
+        snake1_totscore /= 2
         next_round()
 
     # Game Over conditions
     if snake2_position[0] < 0 or snake2_position[0] > window_x - 10:
+        snake2_score /= 2
+        snake2_totscore /= 2
         next_round()
     if snake2_position[1] < 0 or snake2_position[1] > window_y - 10:
+        snake2_score /= 2
+        snake2_totscore /= 2
         next_round()
 
     # Coliding with own snake body
@@ -367,5 +393,6 @@ while pygame.time.get_ticks() < 600000:
 
     # Frame Per Second /Refresh Rate
     fps.tick(snake_speed)
+
 
 game_over()
