@@ -1,7 +1,7 @@
 from copperhead import *
 
 # from side_winder_func import *
-from pungi import *
+from pungi import pungi, compute_Decison_score
 
 # def alpha(mysnake, othersnake, fruit, mysnake_dir, othersnake_dir, mysnake_pos, othersnake_pos, dis_width, dis_height):
 #     new_direction = mysnake_dir
