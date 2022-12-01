@@ -4,6 +4,7 @@ import time
 import random
 import teams
 from teams import *
+import snake_states
 
 # Custom Imports from Pungi
 import math
@@ -17,10 +18,8 @@ team2_name = "side_winder"
 player1 = getattr(teams, team1_name)
 player2 = getattr(teams, team2_name)
 
-# Window size
 window_x = 600
 window_y = 600
-
 # defining colors
 black = pygame.Color(0, 0, 0)
 white = pygame.Color(255, 255, 255)
@@ -39,47 +38,13 @@ game_window = pygame.display.set_mode((window_x, window_y))
 # FPS (frames per second) controller
 fps = pygame.time.Clock()
 
-# defining snake default position
-snake1_init_position = [300, 270]
-snake2_init_position = [300, 330]
 
-snake1_position = snake1_init_position.copy()
-snake2_position = snake2_init_position.copy()
-
-# defining first 3 blocks of snake body. Snakes start in the center of the screen
-snake1_init_body = [[300, 270], [290, 270], [280, 270]]
-snake2_init_body = [[300, 330], [310, 330], [320, 330]]
-
-snake1_body = snake1_init_body.copy()
-snake2_body = snake2_init_body.copy()
-
-# fruit position
-fruit_position = [
-    random.randrange(1, (window_x // 10)) * 10,
-    random.randrange(1, (window_y // 10)) * 10,
-]
-
-fruit_spawn = True
 running = True
 # setting default snake direction away from each other
-
-snake1_direction = "RIGHT"
-snake1_change_to = snake1_direction
-
-snake2_direction = "LEFT"
-snake2_change_to = snake2_direction
-
-
-# initial score
-snake1_score = 0
-snake2_score = 0
-snake1_totscore = 0
-snake2_totscore = 0
 
 
 # displaying Score function
 def show_score(choice, color, font, size):
-
     # creating font object score_font
     score_font = pygame.font.SysFont(font, size)
 
@@ -89,9 +54,9 @@ def show_score(choice, color, font, size):
         "Snake 1: "
         + team1_name
         + " "
-        + str(snake1_score)
+        + str(board.snake1.score)
         + " Total:"
-        + str(snake1_totscore),
+        + str(board.snake1.totscore),
         True,
         green,
     )
@@ -100,9 +65,9 @@ def show_score(choice, color, font, size):
         "Snake 2: "
         + team2_name
         + " "
-        + str(snake2_score)
+        + str(board.snake2.score)
         + " Total:"
-        + str(snake2_totscore),
+        + str(board.snake2.totscore),
         True,
         yellow,
     )
@@ -128,51 +93,9 @@ def next_round():
 
     game_window.fill(red)
 
-    # add up total points
-    global snake1_totscore
-    global snake2_totscore
-    global snake1_score
-    global snake2_score
-
-    snake1_totscore += snake1_score
-    snake2_totscore += snake2_score
-    snake1_score = 0
-    snake2_score = 0
-
-    # reset snake default position
-    global snake1_position
-    global snake2_position
-    snake1_position = snake1_init_position.copy()
-    snake2_position = snake2_init_position.copy()
-
-    # reset first 4 blocks of snake body
-    global snake1_body
-    global snake2_body
-    snake1_body = snake1_init_body.copy()
-    snake2_body = snake2_init_body.copy()
-
-    # setting default snake direction towards
-    # right
-    global snake1_direction
-    snake1_direction = "RIGHT"
-
-    global snake2_direction
-    snake2_direction = "LEFT"
-
-    # randomize fruit position
-    global fruit_spawn
-    fruit_spawn = False
-    return
-
 
 # game over function
 def game_over():
-
-    # assign final points
-    global snake1_totscore
-    global snake2_totscore
-    snake1_totscore += snake1_score
-    snake2_totscore += snake2_score
 
     # creating font object my_font
     my_font = pygame.font.SysFont("times new roman", 20)
@@ -181,9 +104,9 @@ def game_over():
     # will be drawn
     game_over_surface = my_font.render(
         "Final Score! Snake 1 : "
-        + str(snake1_totscore)
+        + str(board.snake1.totscore)
         + " -- Snake 2 : "
-        + str(snake2_totscore),
+        + str(board.snake2.totscore),
         True,
         red,
     )
@@ -209,6 +132,7 @@ def game_over():
     quit()
 
 
+board = snake_states.snake_states()
 # Main Function
 while running:
 
@@ -216,26 +140,26 @@ while running:
         running = False
     # handling key events manual override
     snake1_change_to = player1(
-        snake1_body,
-        snake2_body,
-        fruit_position,
-        snake1_direction,
-        snake2_direction,
-        snake1_position,
-        snake2_position,
-        window_x,
-        window_y,
+        list(board.snake1.body),
+        list(board.snake2.body),
+        board.fruit_position,
+        board.snake1.direction,
+        board.snake2.direction,
+        board.snake1.position,
+        board.snake2.position,
+        board.window_x,
+        board.window_y,
     )
     snake2_change_to = player2(
-        snake2_body,
-        snake1_body,
-        fruit_position,
-        snake2_direction,
-        snake1_direction,
-        snake2_position,
-        snake1_position,
-        window_x,
-        window_y,
+        list(board.snake2.body),
+        list(board.snake1.body),
+        board.fruit_position,
+        board.snake2.direction,
+        board.snake1.direction,
+        board.snake2.position,
+        board.snake1.position,
+        board.window_x,
+        board.window_y,
     )
 
     # handling key events manual override
@@ -260,130 +184,22 @@ while running:
                 snake2_change_to = "RIGHT"
         if event.type == pygame.QUIT:
             running = False
+    board.move(snake1_change_to, snake2_change_to)
 
-    # If two keys pressed simultaneously
-    # we don't want snake to move into two
-    # directions simultaneously
-    if snake1_change_to == "UP" and snake1_direction != "DOWN":
-        snake1_direction = "UP"
-    if snake1_change_to == "DOWN" and snake1_direction != "UP":
-        snake1_direction = "DOWN"
-    if snake1_change_to == "LEFT" and snake1_direction != "RIGHT":
-        snake1_direction = "LEFT"
-    if snake1_change_to == "RIGHT" and snake1_direction != "LEFT":
-        snake1_direction = "RIGHT"
-    if snake2_change_to == "UP" and snake2_direction != "DOWN":
-        snake2_direction = "UP"
-    if snake2_change_to == "DOWN" and snake2_direction != "UP":
-        snake2_direction = "DOWN"
-    if snake2_change_to == "LEFT" and snake2_direction != "RIGHT":
-        snake2_direction = "LEFT"
-    if snake2_change_to == "RIGHT" and snake2_direction != "LEFT":
-        snake2_direction = "RIGHT"
-
-    # Moving the snakes
-    if snake1_direction == "UP":
-        snake1_position[1] -= 10
-    if snake1_direction == "DOWN":
-        snake1_position[1] += 10
-    if snake1_direction == "LEFT":
-        snake1_position[0] -= 10
-    if snake1_direction == "RIGHT":
-        snake1_position[0] += 10
-    if snake2_direction == "UP":
-        snake2_position[1] -= 10
-    if snake2_direction == "DOWN":
-        snake2_position[1] += 10
-    if snake2_direction == "LEFT":
-        snake2_position[0] -= 10
-    if snake2_direction == "RIGHT":
-        snake2_position[0] += 10
-
-    # Snake body growing mechanism
-    # if fruits and snakes collide then scores
-    # will be incremented by 10
-    snake1_body.insert(0, list(snake1_position))
-    snake2_body.insert(0, list(snake2_position))
-
-    # Grow Snake 1 if it colides with fruit
-    if (
-        snake1_position[0] == fruit_position[0]
-        and snake1_position[1] == fruit_position[1]
-    ):
-        snake1_score += 10
-        fruit_spawn = False
-    else:
-        snake1_body.pop()
-
-        # Grow Snake 2 if it colides with fruit
-    if (
-        snake2_position[0] == fruit_position[0]
-        and snake2_position[1] == fruit_position[1]
-    ):
-        snake2_score += 10
-        fruit_spawn = False
-    else:
-        snake2_body.pop()
-
-    if not fruit_spawn:
-        fruit_position = [
-            random.randrange(1, (window_x // 10)) * 10,
-            random.randrange(1, (window_y // 10)) * 10,
-        ]
-
-    fruit_spawn = True
     game_window.fill(black)
 
     # Draw Snake 1 body
-    for pos in snake1_body:
+    for pos in board.snake1.body:
         pygame.draw.rect(game_window, green, pygame.Rect(pos[0], pos[1], 10, 10))
         # Draw Snake 2 body
-    for pos in snake2_body:
+    for pos in board.snake2.body:
         pygame.draw.rect(game_window, yellow, pygame.Rect(pos[0], pos[1], 10, 10))
         # Draw Fruit
     pygame.draw.rect(
-        game_window, white, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10)
+        game_window,
+        white,
+        pygame.Rect(board.fruit_position[0], board.fruit_position[1], 10, 10),
     )
-
-    # Game Over conditions
-    if snake1_position[0] < 0 or snake1_position[0] > window_x - 10:
-        snake1_score /= 2
-        snake1_totscore /= 2
-        next_round()
-    if snake1_position[1] < 0 or snake1_position[1] > window_y - 10:
-        snake1_score /= 2
-        snake1_totscore /= 2
-        next_round()
-
-    # Game Over conditions
-    if snake2_position[0] < 0 or snake2_position[0] > window_x - 10:
-        snake2_score /= 2
-        snake2_totscore /= 2
-        next_round()
-    if snake2_position[1] < 0 or snake2_position[1] > window_y - 10:
-        snake2_score /= 2
-        snake2_totscore /= 2
-        next_round()
-
-    # Coliding with own snake body
-    for block in snake1_body[1:]:
-        if snake1_position[0] == block[0] and snake1_position[1] == block[1]:
-            snake1_score /= 2
-            next_round()
-    for block in snake2_body[1:]:
-        if snake2_position[0] == block[0] and snake2_position[1] == block[1]:
-            snake2_score /= 2
-            next_round()
-
-    # Coliding with other snake body
-    for block in snake1_body[1:]:
-        if snake2_position[0] == block[0] and snake2_position[1] == block[1]:
-            snake2_score /= 2
-            next_round()
-    for block in snake2_body[1:]:
-        if snake1_position[0] == block[0] and snake1_position[1] == block[1]:
-            snake1_score /= 2
-            next_round()
 
     # displaying score countinuously
     show_score(1, white, "times new roman", 20)
