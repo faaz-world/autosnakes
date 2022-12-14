@@ -2,8 +2,8 @@ IS_COLLISION_DETECTED = False
 IS_OTHERSNAKE_COLLISION_DETECTED = False
 
 
-def change_auto_direction(mysnake, fruit, mysnake_dir):
-    scan = scanning(mysnake, mysnake_dir)
+def change_auto_direction(mysnake, othersnake, fruit, mysnake_dir):
+    scan = scanning(mysnake, othersnake, mysnake_dir)
     if scan is not None:
         return scan
 
@@ -41,6 +41,83 @@ def change_auto_direction(mysnake, fruit, mysnake_dir):
                     return 'UP'
                 else:
                     return 'DOWN'
+
+    # we need to modify from here
+    elif mysnake[0][0] < fruit[0] and mysnake[0][1] < fruit[1]:
+        if mysnake_dir != 'LEFT':
+            if mysnake_dir == 'RIGHT':
+                return 'DOWN'
+            else:
+                return 'RIGHT'
+        else:
+            return 'DOWN'
+    elif mysnake[0][0] < fruit[0] and mysnake[0][1] > fruit[1]:
+        if mysnake_dir != 'LEFT':
+            if mysnake_dir == 'RIGHT':
+                return 'UP'
+            else:
+                return 'RIGHT'
+        else:
+            return 'UP'
+    elif mysnake[0][0] > fruit[0] and mysnake[0][1] < fruit[1]:
+        if mysnake_dir != 'RIGHT':
+            if mysnake == 'LEFT':
+                return 'DOWN'
+            else:
+                return 'LEFT'
+        else:
+            return 'DOWN'
+    elif mysnake[0][0] > fruit[0] and mysnake[0][1] > fruit[1]:
+        if mysnake_dir != 'RIGHT':
+            if mysnake_dir == 'LEFT':
+                return 'UP'
+            else:
+                return 'LEFT'
+        else:
+            return 'UP'
+
+
+def change_auto_direction2(mysnake, othersnake, fruit, mysnake_dir):
+    scan = scanning(mysnake, othersnake, mysnake_dir)
+    if scan is not None:
+        return scan
+
+    if mysnake[0][0] == fruit[0]:
+        if mysnake[0][1] < fruit[1]:
+            if mysnake_dir != 'UP':
+                return 'DOWN'
+            else:
+                if mysnake[0][0] != 0:
+                    return 'LEFT'
+                else:
+                    return 'RIGHT'
+        else:
+            if mysnake_dir != 'DOWN':
+                return 'UP'
+            else:
+                if mysnake[0][0] != 0:
+                    return 'LEFT'
+                else:
+                    return 'RIGHT'
+    elif mysnake[0][1] == fruit[1]:
+        if mysnake[0][0] < fruit[0]:
+            if mysnake_dir != 'LEFT':
+                return 'RIGHT'
+            else:
+                if mysnake[0][1] != 0:
+                    return 'UP'
+                else:
+                    return 'DOWN'
+        else:
+            if mysnake_dir != 'RIGHT':
+                return 'LEFT'
+            else:
+                if mysnake[0][1] != 0:
+                    return 'UP'
+                else:
+                    return 'DOWN'
+
+    # we need to modify from here
     elif mysnake[0][0] < fruit[0] and mysnake[0][1] < fruit[1]:
         if mysnake_dir != 'LEFT':
             return 'RIGHT'
@@ -72,13 +149,17 @@ def check_before_self_collision(mysnake, dis_width, fruit, mysnake_dir):
                 IS_COLLISION_DETECTED = True
                 if mysnake[0][0] < fruit[0]:
                     if not is_snake_collision_right(mysnake, dis_width):
+                        print("1")
                         return 'RIGHT'
                     else:
+                        print("2")
                         return 'LEFT'
                 else:
                     if not is_snake_collision_left(mysnake, 0):
+                        print("3")
                         return 'LEFT'
                     else:
+                        print("4")
                         return 'RIGHT'
         elif mysnake_dir == "DOWN":
             diff = block[1] - mysnake[0][1]
@@ -86,13 +167,17 @@ def check_before_self_collision(mysnake, dis_width, fruit, mysnake_dir):
                 IS_COLLISION_DETECTED = True
                 if mysnake[0][0] < fruit[0]:
                     if not is_snake_collision_right(mysnake, dis_width):
+                        print("5")
                         return 'RIGHT'
                     else:
+                        print("6")
                         return 'LEFT'
                 else:
                     if not is_snake_collision_left(mysnake, 0):
+                        print("7")
                         return 'LEFT'
                     else:
+                        print("8")
                         return 'RIGHT'
         elif mysnake_dir == "LEFT":
             diff = mysnake[0][0] - block[0]
@@ -100,13 +185,17 @@ def check_before_self_collision(mysnake, dis_width, fruit, mysnake_dir):
                 IS_COLLISION_DETECTED = True
                 if mysnake[0][1] < fruit[1]:
                     if not is_snake_collision_down(mysnake, dis_width):
+                        print("9")
                         return 'DOWN'
                     else:
+                        print("10")
                         return 'UP'
                 else:
                     if not is_snake_collision_up(mysnake, 0):
+                        print("11")
                         return 'UP'
                     else:
+                        print("12")
                         return 'DOWN'
         elif mysnake_dir == "RIGHT":
             diff = block[0] - mysnake[0][0]
@@ -114,13 +203,17 @@ def check_before_self_collision(mysnake, dis_width, fruit, mysnake_dir):
                 IS_COLLISION_DETECTED = True
                 if mysnake[0][1] < fruit[1]:
                     if not is_snake_collision_down(mysnake, dis_width):
+                        print("13")
                         return 'DOWN'
                     else:
+                        print("14")
                         return 'UP'
                 else:
                     if not is_snake_collision_up(mysnake, 0):
+                        print("15")
                         return 'UP'
                     else:
+                        print("16")
                         return 'DOWN'
 
 
@@ -181,7 +274,6 @@ def check_other_snake_collision(mysnake, othersnake, dis_width, fruit, mysnake_d
                     else:
                         return 'LEFT'
                 else:
-                    print("left")
                     if not is_othersnake_collision_left(mysnake, othersnake, 0):
                         return 'LEFT'
                     else:
@@ -224,7 +316,7 @@ def check_other_snake_collision(mysnake, othersnake, dis_width, fruit, mysnake_d
                     else:
                         return 'UP'
                 else:
-                    if not is_othersnake_collision_up(mysnake, othersnake):
+                    if not is_othersnake_collision_up(mysnake, othersnake, 0):
                         return 'UP'
                     else:
                         return 'DOWN'
@@ -284,7 +376,22 @@ def get_direction(mysnake, othersnake, dis_width, fruit, mysnake_dir):
             elif IS_OTHERSNAKE_COLLISION_DETECTED:
                 my_direction = change_dir_if_othersnake_collision_detected(mysnake,othersnake, mysnake_dir, dis_width)
             else:
-                my_direction = change_auto_direction(mysnake, fruit, mysnake_dir)
+                my_direction = change_auto_direction(mysnake, othersnake, fruit, mysnake_dir)
+
+    return my_direction
+
+
+def get_direction2(mysnake, othersnake, dis_width, fruit, mysnake_dir):
+    my_direction = check_before_self_collision(mysnake, dis_width, fruit, mysnake_dir)
+    if my_direction is None:
+        my_direction = check_other_snake_collision(mysnake, othersnake, dis_width, fruit, mysnake_dir)
+        if my_direction is None:
+            if IS_COLLISION_DETECTED:
+                my_direction = change_dir_if_collision_detected(mysnake, mysnake_dir, dis_width)
+            elif IS_OTHERSNAKE_COLLISION_DETECTED:
+                my_direction = change_dir_if_othersnake_collision_detected(mysnake,othersnake, mysnake_dir, dis_width)
+            else:
+                my_direction = change_auto_direction2(mysnake, othersnake, fruit, mysnake_dir)
 
     return my_direction
 
@@ -347,16 +454,27 @@ def change_dir_if_othersnake_collision_detected(mysnake, othersnake, mysnake_dir
             return mysnake_dir
 
 
-def scanning(mysnake, mysnake_dir):
+def scanning(mysnake, othersnake, mysnake_dir):
     if mysnake_dir == "LEFT" or mysnake_dir == "RIGHT":
         is_collision_up = is_snake_collision_up(mysnake, mysnake[0][1] - 20)
         is_collision_down = is_snake_collision_down(mysnake, mysnake[0][1] + 20)
 
         if is_collision_up or is_collision_down:
             return mysnake_dir
+        else:
+            is_other_collision_up = is_othersnake_collision_up(mysnake, othersnake, mysnake[0][1] - 20)
+            is_other_collision_down = is_othersnake_collision_down(mysnake, othersnake, mysnake[0][1] + 20)
+            if is_other_collision_up or is_other_collision_down:
+                return mysnake_dir
+
     elif mysnake_dir == "UP" or mysnake_dir == "DOWN":
         is_collision_left = is_snake_collision_left(mysnake, mysnake[0][0] - 20)
         is_collision_right = is_snake_collision_right(mysnake, mysnake[0][0] + 20)
 
         if is_collision_left or is_collision_right:
             return mysnake_dir
+        else:
+            is_other_collision_left = is_othersnake_collision_left(mysnake, othersnake, mysnake[0][1] - 20)
+            is_other_collision_right = is_othersnake_collision_right(mysnake, othersnake, mysnake[0][1] + 20)
+            if is_other_collision_left or is_other_collision_right:
+                return mysnake_dir
