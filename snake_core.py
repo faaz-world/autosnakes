@@ -9,7 +9,8 @@ snake_speed = 15
 
 team1_name = "copperhead"
 # team2_name = "beta"
-team2_name = "side_winder"
+#team2_name = "side_winder"
+team2_name = "code_byte"
 
 player1 = getattr(teams, team1_name)
 player2 = getattr(teams, team2_name)
